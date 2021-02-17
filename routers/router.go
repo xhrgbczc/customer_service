@@ -1,13 +1,13 @@
 // @APIVersion 2.0.0
 // @Title KEFU server API
 // @Description kefu server APIs.
-// @Contact 361554012@qq.com
+// @Contact 791672300@qq.com
 
 package routers
 
 import (
-	"kefu_server/controllers"
-	"kefu_server/filters"
+	"kf_server/controllers"
+	"kf_server/filters"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/plugins/cors"
@@ -31,6 +31,9 @@ func routers(prefix string) *beego.Namespace {
 			beego.NSRouter("/read", &controllers.PublicController{}, "get:Read"),
 			beego.NSRouter("/configs", &controllers.PublicController{}, "get:Configs"),
 			beego.NSRouter("/activity", &controllers.PublicController{}, "get:LastActivity"),
+			// tramper 
+			beego.NSRouter("/servicers", &controllers.PublicController{}, "post:Servicers"),
+			beego.NSRouter("/servicer", &controllers.PublicController{}, "get:Servicer"),
 
 			// compatible v1
 			beego.NSRouter("/activity/?:id", &controllers.PublicController{}, "get:LastActivity"),

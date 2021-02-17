@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"kefu_server/configs"
-	"kefu_server/services"
+	"kf_server/configs"
+	"kf_server/services"
 )
 
 // UploadsConfigController struct

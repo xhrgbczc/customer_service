@@ -9,6 +9,7 @@ type WorkOrderDto struct {
 	Content   string `json:"content"`    // 内容
 	Phone     string `json:"phone"`      // 用户联系电话
 	Email     string `json:"email"`      // 邮箱(可用于客服回复后发提醒邮件给客户)
+	ToEmail   string `json:"to_email"`   // 邮箱(可用于客服回复后发提醒邮件给客户)
 	Status    int    `json:"status"`     // 当前状态 （ 0=待处理 | 1=客服已回复 | 2=客户已回复 | 3=已结单 ）
 	LastReply int64  `json:"last_reply"` // 最后回复的客服ID
 	CID       int64  `json:"cid"`        // 结单客服ID

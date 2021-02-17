@@ -1,7 +1,7 @@
 package task
 
 import (
-	"kefu_server/services"
+	"kf_server/services"
 
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/toolbox"

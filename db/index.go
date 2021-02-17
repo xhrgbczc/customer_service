@@ -1,7 +1,7 @@
 package db
 
 import (
-	"kefu_server/models"
+	"kf_server/models"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"

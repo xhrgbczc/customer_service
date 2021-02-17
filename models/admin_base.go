@@ -8,6 +8,7 @@ type Admin struct {
 	NickName       string `orm:"type(char);column(nickname)" json:"nickname"`                                  // 昵称
 	Password       string `orm:"type(char);column(password)" json:"password"`                                  // 密码MD5
 	Phone          string `orm:"type(char);null;column(phone)" json:"phone"`                                   // 手机
+	Email          string `orm:"type(char);null;column(email)" json:"email"`                                   // 邮箱
 	Token          string `orm:"null;type(text);column(token)" json:"token"`                                   // token
 	AutoReply      string `orm:"null;default('您好有什么可以帮到您呢？');type(text);column(auto_reply)" json:"auto_reply"` // 自动回复语
 	Online         int    `orm:"default(0);column(online)" json:"online"`                                      // 在线状态 0 离线 1 在线 2 繁忙（繁忙状态不接待新客户）

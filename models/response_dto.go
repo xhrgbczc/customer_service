@@ -1,6 +1,6 @@
 package models
 
-import "kefu_server/configs"
+import "kf_server/configs"
 
 // ResponseDto struct
 type ResponseDto struct {

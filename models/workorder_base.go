@@ -9,6 +9,7 @@ type WorkOrder struct {
 	Content   string `orm:"type(text);column(content)" json:"content"`         // 内容
 	Phone     string `orm:"type(char);null;column(phone)" json:"phone"`        // 用户联系电话
 	Email     string `orm:"type(varchar);null;column(email)" json:"email"`     // 邮箱(可用于客服回复后发提醒邮件给客户)
+	ToEmail   string `orm:"type(varchar);null;column(to_email)" json:"to_email"`     // 邮箱(可用于发送邮件给用户指定的客服)
 	Status    int    `orm:"default(0);column(status)" json:"status"`           // 当前状态 （ 0=待处理 | 1=客户已回复 | 2=客服已回复 | 3=已结单 ）
 	LastReply int64  `orm:"type(bigint);column(last_reply)" json:"last_reply"` // 最后回复的客服ID
 	CID       int64  `orm:"type(bigint);column(cid)" json:"cid"`               // 结单客服ID

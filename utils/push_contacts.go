@@ -2,8 +2,8 @@ package utils
 
 import (
 	"encoding/json"
-	"kefu_server/models"
-	"kefu_server/services"
+	"kf_server/models"
+	"kf_server/services"
 	"time"
 )
 

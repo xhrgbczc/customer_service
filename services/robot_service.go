@@ -2,7 +2,7 @@ package services
 
 import (
 	"errors"
-	"kefu_server/models"
+	"kf_server/models"
 	"math/rand"
 	"strings"
 

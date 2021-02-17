@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"encoding/json"
-	"kefu_server/configs"
-	"kefu_server/models"
-	"kefu_server/services"
-	"kefu_server/utils"
+	"kf_server/configs"
+	"kf_server/models"
+	"kf_server/services"
+	"kf_server/utils"
 	"strconv"
 
 	"github.com/astaxie/beego"

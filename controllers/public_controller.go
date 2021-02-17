@@ -5,10 +5,10 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
-	"kefu_server/configs"
-	"kefu_server/models"
-	"kefu_server/services"
-	"kefu_server/utils"
+	"kf_server/configs"
+	"kf_server/models"
+	"kf_server/services"
+	"kf_server/utils"
 	"os"
 	"path"
 	"strconv"
@@ -17,8 +17,8 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
-	"github.com/qiniu/api.v7/v7/auth/qbox"
-	"github.com/qiniu/api.v7/v7/storage"
+	"github.com/qiniu/api.v7/auth/qbox"
+	"github.com/qiniu/api.v7/storage"
 )
 
 // PublicController struct
@@ -236,7 +236,7 @@ func (c *PublicController) Window() {
 	}
 
 	// update
-	_, err := c.UserRepository.Update(user.ID, orm.Params{
+	_, err := c.UserRepository.Update(user.UID, orm.Params{
 		"IsWindow": wType.Window,
 	})
 	if err != nil {
@@ -483,6 +483,13 @@ func (c *PublicController) Upload() {
 		".zip":  true,
 		".ZIP":  true,
 		".mp4":  true,
+		// new items start by tramper
+		".xls":  true,
+		".xlsx": true,
+		".doc": true,
+		".docx": true,
+		".txt": true,
+		// new items end by tramper
 	}
 	if _, ok := AllowExtMap[ext]; !ok {
 		c.JSON(configs.ResponseFail, "上传失败,上传文件不合法!", nil)
@@ -573,6 +580,48 @@ func (c *PublicController) GetMessageHistoryList() {
 
 }
 
+// List get admin all
+func (c *PublicController) Servicers() {
+
+	// request body
+	var paginationDto services.AdminPaginationDto
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &paginationDto); err != nil {
+		c.JSON(configs.ResponseFail, "参数有误，请检查!", err.Error())
+	}
+
+	data, err := c.AdminRepository.GetAdmins(&paginationDto)
+
+	if err != nil {
+		c.JSON(configs.ResponseFail, "fail", err.Error())
+	}
+
+	c.JSON(configs.ResponseSucess, "success", &data)
+}
+
+// Get admin
+func (c *PublicController) Servicer() {
+
+	// GetAdminAuthInfo
+	/* auth := c.GetAdminAuthInfo()
+	admin := c.AdminRepository.GetAdmin(auth.UID)
+	if admin == nil {
+		c.JSON(configs.ResponseFail, "fail，用户不存在!", nil)
+	} */
+
+	id, _ := strconv.ParseInt(c.Ctx.Input.Query("id"), 10, 64)
+	/* if admin.ID != id && admin.Root != 1 {
+		c.JSON(configs.ResponseFail, "没有权限查看用户信息!", nil)
+	} */
+
+	retrunAdmin := c.AdminRepository.GetAdmin(id)
+	if retrunAdmin == nil {
+		c.JSON(configs.ResponseFail, "fail，用户不存在!", nil)
+	}
+
+	retrunAdmin.Password = "******"
+	c.JSON(configs.ResponseSucess, "success", &retrunAdmin)
+}
+
 // CreateWorkOrder send word order
 func (c *PublicController) CreateWorkOrder() {
 
@@ -620,8 +669,25 @@ func (c *PublicController) CreateWorkOrder() {
 		c.JSON(configs.ResponseFail, "fail", err.Error())
 	}
 	services.GetUserRepositoryInstance().Update(user.ID, orm.Params{"is_workorder": 1})
-	c.JSON(configs.ResponseSucess, "工单创建成功!", wid)
 
+	// send email message by tramper
+	openWorkorderEmail, _ := beego.AppConfig.Bool("open_workorder_email")
+	if workOrder.ToEmail != "" && openWorkorderEmail {
+		go func() {
+			// get servicer's email address
+			// mailTo := []string{workOrder.Email}
+			mailTo := []string{workOrder.ToEmail}
+			adminClientURL := beego.AppConfig.String("admin_client_url")
+			emailName := beego.AppConfig.String("email_name")
+			subject := "您收到一封预约单：" + workOrder.Title + ""
+			// strconv.FormatInt(workOrder.UID, 10) 用户id
+			body := "服务单标题：" + workOrder.Title + "<br>预约服务内容："+workOrder.Content+"<br/><br/><br/><a target='_blank' href='" + adminClientURL + "'>去处理</a><br><br/><br/>" + emailName
+			
+			utils.SendMail(mailTo, subject, body)
+		}()
+	}
+	
+	c.JSON(configs.ResponseSucess, "工单创建成功!", wid)
 }
 
 // ReplyWorkOrder send word order

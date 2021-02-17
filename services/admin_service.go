@@ -1,7 +1,8 @@
 package services
 
 import (
-	"kefu_server/models"
+	"strconv"
+	"kf_server/models"
 
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
@@ -61,7 +62,7 @@ func (r *AdminRepository) CheckAdminsLoginTimeOutAndSetOffline(lastMessageUnixTi
 func (r *AdminRepository) GetAdmin(id int64) *models.Admin {
 	var admin models.Admin
 	if err := r.q.Filter("id", id).One(&admin); err != nil {
-		logs.Warn("GetAdmin get one admin with id------------", err)
+		logs.Warn("GetAdmin get one admin with id------------" + strconv.FormatInt(id,10)  , err)
 		return nil
 	}
 	return &admin

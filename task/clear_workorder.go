@@ -1,9 +1,9 @@
 package task
 
 import (
-	"kefu_server/models"
-	"kefu_server/services"
-	"kefu_server/utils"
+	"kf_server/models"
+	"kf_server/services"
+	"kf_server/utils"
 	"strconv"
 	"time"
 

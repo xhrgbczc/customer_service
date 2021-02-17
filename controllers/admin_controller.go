@@ -4,9 +4,9 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
-	"kefu_server/configs"
-	"kefu_server/models"
-	"kefu_server/services"
+	"kf_server/configs"
+	"kf_server/models"
+	"kf_server/services"
 	"strconv"
 	"time"
 
@@ -103,6 +103,7 @@ func (c *AdminController) Put() {
 	valid.MaxSize(admin.AutoReply, 100, "auto_reply").Message("自动回复语不能超过100个字！")
 	valid.Required(admin.Phone, "phone").Message("手机号不能为空！")
 	valid.Mobile(admin.Phone, "phone").Message("手机号格式不正确！")
+	valid.Email(admin.Email, "email").Message("邮箱格式不正确！")
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
 			c.JSON(configs.ResponseFail, err.Message, nil)
@@ -112,6 +113,7 @@ func (c *AdminController) Put() {
 	// update
 	if _, err := c.AdminRepository.Update(admin.ID, orm.Params{
 		"Phone":     admin.Phone,
+		"Email":     admin.Email,
 		"NickName":  admin.NickName,
 		"UpdateAt":  time.Now().Unix(),
 		"Avatar":    admin.Avatar,

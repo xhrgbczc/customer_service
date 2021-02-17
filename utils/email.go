@@ -22,9 +22,10 @@ func SendMail(mailTo []string, subject string, body string) {
 	m.SetHeader("To", mailTo...)
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/html", body)
-
+	logs.Error("SendMail send email start", body, "")
 	d := gomail.NewDialer(mailConn["host"], port, mailConn["user"], mailConn["pass"])
 	err := d.DialAndSend(m)
+	logs.Error("SendMail send email end err", err, "")
 	if err != nil {
 		logs.Error("SendMail send email error------------", err)
 	}

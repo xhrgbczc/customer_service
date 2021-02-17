@@ -1,6 +1,6 @@
 package controllers
 
-import "kefu_server/configs"
+import "kf_server/configs"
 
 // ErrorController  struct
 type ErrorController struct {

@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"encoding/json"
-	"kefu_server/configs"
-	"kefu_server/services"
+	"kf_server/configs"
+	"kf_server/services"
 
 	"github.com/astaxie/beego/validation"
 )

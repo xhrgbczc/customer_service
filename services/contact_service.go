@@ -2,7 +2,7 @@ package services
 
 import (
 	"encoding/base64"
-	"kefu_server/models"
+	"kf_server/models"
 
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"

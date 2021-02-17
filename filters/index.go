@@ -1,8 +1,8 @@
 package filters
 
 import (
-	"kefu_server/models"
-	"kefu_server/utils"
+	"kf_server/models"
+	"kf_server/utils"
 	"math/big"
 	"regexp"
 	"strconv"

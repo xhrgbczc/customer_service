@@ -2,8 +2,8 @@ package utils
 
 import (
 	"encoding/base64"
-	"kefu_server/models"
-	"kefu_server/services"
+	"kf_server/models"
+	"kf_server/services"
 	"time"
 
 	"github.com/astaxie/beego/orm"
